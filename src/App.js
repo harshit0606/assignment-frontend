@@ -20,25 +20,29 @@ function App() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/getcompany").then((res) => {
-      console.log(res.data);
-      setAllCompanies(res.data);
-    });
+    axios
+      .get("https://assignment-backend.vercel.app/api/getcompany")
+      .then((res) => {
+        console.log(res.data);
+        setAllCompanies(res.data);
+      });
   }, []);
 
   function addCompany(){
-    axios.post("http://localhost:5000/api/addcompany",{
-      name:name,
-      email:email,
-      contactNo:contact,
-      location:location
-    }).then((res)=>{
-      setAllCompanies((e)=>[...e,res.data]);
-      setName("");
-      setContact("");
-      setEmail("");
-      setLocation("");
-    });
+    axios
+      .post("https://assignment-backend.vercel.app/api/addcompany", {
+        name: name,
+        email: email,
+        contactNo: contact,
+        location: location,
+      })
+      .then((res) => {
+        setAllCompanies((e) => [...e, res.data]);
+        setName("");
+        setContact("");
+        setEmail("");
+        setLocation("");
+      });
   }
 
   function handleClose(){
@@ -60,35 +64,42 @@ function App() {
 
   function editCompany(){
     console.log(editId);
-    axios.patch( `http://localhost:5000/api/editcompany/${editId}`,{
-      name:editname,
-      email:editemail,
-      location:editlocation,
-      contactNo:editcontact
-    }).then((res)=>{
-      let b = allCompanies.findIndex((a) => a._id === editId);
-      var dummyarr = [...allCompanies];
-      dummyarr[b].name = editname;
-      dummyarr[b].email = editemail;
-      dummyarr[b].editlocation = editlocation;
-      dummyarr[b].contactNo=editcontact;
-      setEditName("");
-      setEditContact("");
-      setEditEmail("");
-      setEditLocation("");
-      setEditId("");
-      handleClose();
-     });
+    axios
+      .patch(
+        `https://assignment-backend.vercel.app/api/editcompany/${editId}`,
+        {
+          name: editname,
+          email: editemail,
+          location: editlocation,
+          contactNo: editcontact,
+        }
+      )
+      .then((res) => {
+        let b = allCompanies.findIndex((a) => a._id === editId);
+        var dummyarr = [...allCompanies];
+        dummyarr[b].name = editname;
+        dummyarr[b].email = editemail;
+        dummyarr[b].editlocation = editlocation;
+        dummyarr[b].contactNo = editcontact;
+        setEditName("");
+        setEditContact("");
+        setEditEmail("");
+        setEditLocation("");
+        setEditId("");
+        handleClose();
+      });
   }
 
   function deleteCompany(id){
-    axios.delete(`http://localhost:5000/api/deletecompany/${id}`).then(() => {
-      console.log("Company deleted");
-      let b = allCompanies.findIndex((a) => a._id === id);
-      var dummyarr = [...allCompanies];
-      dummyarr.splice(b, 1);
-      setAllCompanies(dummyarr);
-    });;
+    axios
+      .delete(`https://assignment-backend.vercel.app/api/deletecompany/${id}`)
+      .then(() => {
+        console.log("Company deleted");
+        let b = allCompanies.findIndex((a) => a._id === id);
+        var dummyarr = [...allCompanies];
+        dummyarr.splice(b, 1);
+        setAllCompanies(dummyarr);
+      });;
   }
 
   function handleChange(e){
